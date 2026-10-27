@@ -1,0 +1,18 @@
+# База данных
+db.sqlite3
+db.sqlite3-journal
+
+# Виртуальное окружение
+.venv/
+venv/
+
+# Кеш Python
+__pycache__/
+*.py[cod]
+
+# Переменные окружения
+.env
+
+# Настройки редакторов
+.idea/
+.vscode/
