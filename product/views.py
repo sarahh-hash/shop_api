@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-
+from django.db.models import Avg
 from .models import Category, Product, Review
 from .serializers import (
     CategorySerializer,
@@ -83,3 +83,25 @@ def review_detail_api_view(request, id):
     data = ReviewDetailSerializer(review, many=False).data
 
     return Response(data=data, status=status.HTTP_200_OK)
+@api_view(['GET'])
+def product_reviews_api_view(request):
+    products = Product.objects.all()
+
+    data = []
+
+    for product in products:
+        reviews = Review.objects.filter(product=product)
+
+        product_data = ProductSerializer(product).data
+
+        product_data['reviews'] = ReviewSerializer(
+            reviews, many=True
+        ).data
+
+        product_data['rating'] = reviews.aggregate(
+            Avg('stars')
+        )['stars__avg']
+
+        data.append(product_data)
+
+    return Response(data=data)

@@ -27,6 +27,14 @@ class Review(models.Model):
         Product,
         on_delete=models.CASCADE,
     )
+    stars = models.IntegerField(choices=[
+            (1, '1 звезда'),
+            (2, '2 звезды'),
+            (3, '3 звезды'),
+            (4, '4 звезды'),
+            (5, '5 звёзд'),
+        ],
+        default=5)
 
     def __str__(self):
         return self.text[:50]
