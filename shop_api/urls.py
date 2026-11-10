@@ -16,24 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from product import views
-
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # Categories
-    path('api/v1/categories/', views.category_list_api_view),
-    path('api/v1/categories/<int:id>/', views.category_detail_api_view),
+    path('api/v1/', include('product.urls')),
 
-    # Products
-    path('api/v1/products/', views.product_list_api_view),
-    path('api/v1/products/<int:id>/', views.product_detail_api_view),
-
-    # Reviews
-    path('api/v1/reviews/', views.review_list_api_view),
-    path('api/v1/reviews/<int:id>/', views.review_detail_api_view),
-
-    # Product reviews
-    path('api/v1/products/reviews/', views.product_reviews_api_view),
+    path('api/v1/users/', include('users.urls')),
 ]
