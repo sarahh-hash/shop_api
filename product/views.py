@@ -11,6 +11,7 @@ from .serializers import (
     ReviewSerializer,
     ReviewDetailSerializer,
 )
+from .serializers import CategoryValidateSerializer
 @api_view(['GET', 'POST'])
 def category_list_api_view(request):
     if request.method == 'GET':
