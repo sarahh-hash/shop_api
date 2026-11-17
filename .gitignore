@@ -1,18 +1,24 @@
-# База данных
-db.sqlite3
-db.sqlite3-journal
-
-# Виртуальное окружение
-.venv/
-venv/
-
-# Кеш Python
+# Python
 __pycache__/
 *.py[cod]
 
-# Переменные окружения
+# Django
+db.sqlite3
+media/
+staticfiles/
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Environment variables
 .env
 
-# Настройки редакторов
+# IDE
 .idea/
 .vscode/
+
+# OS
+.DS_Store
+Thumbs.db
