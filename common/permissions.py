@@ -1,0 +1,35 @@
+from datetime import timedelta
+
+from django.utils import timezone
+from rest_framework.permissions import BasePermission, SAFE_METHODS
+
+
+class IsAuth(BasePermission):
+    def has_permission(self, request, view):
+        return request.user and request.user.is_authenticated and not request.user.is_staff
+
+    def has_object_permission(self, request, view, obj):
+        return request.user == obj.owner
+
+
+class IsAnon(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS
+
+class CanEditWithIn15Minutes(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        time_passed = timezone.now() - obj.created_at
+        return time_passed <= timedelta(minutes=1)
+from rest_framework.permissions import BasePermission
+
+class IsModerator(BasePermission):
+
+    def has_permission(self, request, view):
+        return (
+            request.user
+            and request.user.is_authenticated and request.user.is_staff
+            and request.method != 'POST'
+        )
+
+    def has_object_permission(self, request, view, obj):
+        return request.user.is_staff

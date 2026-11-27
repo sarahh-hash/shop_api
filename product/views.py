@@ -7,6 +7,8 @@ from rest_framework.generics import (
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 
+from rest_framework import permissions
+from common.permissions import CanEditWithIn15Minutes, IsAnon, IsAuth, IsModerator
 from django.db.models import Avg
 
 from .models import Category, Product, Review
@@ -49,11 +51,19 @@ class ProductListAPIView(ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     pagination_class = TotalPagination
+    permission_classes = [
+        IsAnon | IsAuth | IsModerator
+    ]
 
 class ProductDetailAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = ProductSerializer
     lookup_field ='id'
+
+    permission_classes = [
+        IsAnon | (IsAuth & CanEditWithIn15Minutes) | IsModerator
+    ]
+    
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return ProductDetailSerializer

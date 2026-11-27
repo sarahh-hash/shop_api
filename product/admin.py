@@ -1,6 +1,17 @@
-
 from django.contrib import admin
-from users.models import CustomUser
-from django.contrib.auth.admin import UserAdmin
+from .models import Category, Product, Review
 
-# Register your models here.
+class ReviewInline(admin.TabularInline):
+    model = Review
+    extra = 1
+
+class ProductAdmin(admin.ModelAdmin):
+    inlines = [ReviewInline]
+    search_fields = ['title']
+    list_filter = ['price', 'category']
+    list_display = ['title', 'price', 'category']
+    list_editable = ['price']
+    readonly_fields = ["created_at"]
+
+admin.site.register(Category)
+admin.site.register(Product, ProductAdmin)

@@ -165,3 +165,12 @@ JAZZMIN_UI_TWEAKS = {
 
     "theme": "sketchy",
 }
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        'Authorization': {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
